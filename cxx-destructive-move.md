@@ -67,10 +67,11 @@ Destructive initialization:
 
 Emphasis is on *minimalistic* here. This design certainly doesn't solve what everyone wants.
 But let's start with incremental approach because
-**(1)** Nothing larger is going to get through the process within out lifetimes,
+**(1)** Nothing larger is going to get through the process within our lifetimes,
 **(2)** We're not getting anything like Rust, nor any magic bullet, in C++ ever,
 **(3)** obviously everyone is attempting to solve way too much in a single go.
 
-## Remarks
+## Possible extensions
+* both destructors could be `= default`, akin to regular move, creating objects with life-times possibly shorter than their scope
 * [[attribute]] for debug methods allowed to be called on destructively moved-from objects?
 
