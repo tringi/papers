@@ -1,4 +1,4 @@
 *C++ and other*
 # Papers &amp; proposals
 
-* [cxx-destructive-move.md](C++ Destructive Move) - quick and dirty proposal draft
+* [C++ Destructive Move](cxx-destructive-move.md) - quick and dirty proposal draft
