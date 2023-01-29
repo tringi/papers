@@ -18,3 +18,7 @@
           return a * b + c;
 
 * `const` and `volatile` implies `auto`
+
+      const a = 1; // same as: const auto a = 1;
+      volatile b = 2.0; // same as: volatile auto b = 2.0
+
