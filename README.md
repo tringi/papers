@@ -3,6 +3,11 @@
 
 * [C++ Destructive Move](cxx-destructive-move.md) - quick and dirty proposal draft
 
+      struct A {
+          ~A (A & a) noexcept { ... }
+          ~A () noexcept -> A { return A{ ... }; }
+      };
+
 # Syntactic sugar ideas
 
 * Function-return-statement (akin to function-try-block)
