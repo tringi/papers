@@ -11,4 +11,5 @@
 
     int fma (int a, int b, int c)
         return a * b + c;
+
 * `const` and `volatile` implies `auto`
