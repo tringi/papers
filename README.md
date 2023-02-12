@@ -10,6 +10,24 @@
 
 # Syntactic sugar ideas
 
+* Argument dependent lookup for scoped enumerations
+  If an argument cannot be found, relevant enum scope is searched too, enabling one to write:
+  
+      enum class color {
+          red,
+          green,
+          blue,
+      };
+      int function (color c);
+      
+      // ...
+      
+      function (red); // color::red
+      
+      color green = blue; // color::blue
+      function (green); // local variables still have priority
+      
+
 * Function-return-statement (akin to function-try-block)
   In function definition, where function body would normally begin, or where `try` statement
   could appear, an immediate `return` can now appear too.
