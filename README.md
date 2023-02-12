@@ -10,8 +10,8 @@
 
 # Syntactic sugar ideas
 
-* Argument dependent lookup for scoped enumerations
-  If an argument cannot be found, relevant enum scope is searched too, enabling one to write:
+* **Argument dependent lookup for scoped enumerations**  
+  *If an argument cannot be found, relevant enum scope is searched too, enabling one to write:*
   
       enum class color {
           red,
@@ -28,9 +28,9 @@
       function (green); // local variables still have priority
       
 
-* Function-return-statement (akin to function-try-block)
-  In function definition, where function body would normally begin, or where `try` statement
-  could appear, an immediate `return` can now appear too.
+* **Function-return-statement (akin to function-try-block)**  
+  *In function definition, where function body would normally begin, or where `try` statement
+  could appear, an immediate `return` can now appear too.*
 
       int fma (int a, int b, int c)
           return a * b + c;
