@@ -30,15 +30,17 @@ and end its lifetime there.
 
 ## Syntax
 
-    struct A {
-        ~A (A & a) noexcept {
-            // destructively assign content into 'a'
-        }
-        ~A () noexcept -> A {
-            // destructively (N)RVA construct new A
-            return A{ … };
-        }
-    };
+```cpp
+struct A {
+    ~A (A & a) noexcept {
+        // destructively assign content into 'a'
+    }
+    ~A () noexcept -> A {
+        // destructively (N)RVA construct new A
+        return A{ … };
+    }
+};
+```
 
 Design considerations for the syntax above:
 
@@ -47,20 +49,24 @@ Design considerations for the syntax above:
 
 Destructive assignment:
 
-    A a;
-    A b;
-    // …
-    b = std::move (a); // invokes a.~A(b);
-    // …
-    // never use 'a' within this scope
+```cpp
+A a;
+A b;
+// …
+b = std::move (a); // invokes a.~A(b);
+// …
+// never use 'a' within this scope
+```
 
 Destructive initialization:
 
-    A a;
-    // …
-    A b (std::move (a)); // the second destructor NRVO-constructs 'b'
-    // …
-    // never use 'a' within this scope
+```cpp
+A a;
+// …
+A b (std::move (a)); // the second destructor NRVO-constructs 'b'
+// …
+// never use 'a' within this scope
+```
 
 ## Rationale
 
