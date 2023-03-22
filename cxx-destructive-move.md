@@ -25,9 +25,9 @@ There are many designs proposed or talked about for destructive move in C++, the
 
 Classes may define two new destructors, see [Syntax](#Syntax) below.
 
-For instances of such classes the compiler performs additional lifetime analysis:
+For instances of such classes, the compiler performs additional lifetime analysis:
 If it can **prove** the instance isn't touched after the last move-from (either implicit or `std::move`),
-it is allowed to **observably** replace that last move-from by the appropriate destructor,
+it is allowed to **observably** replace that last move-from by the appropriate new destructor (see below),
 and end its lifetime there (early).
 
 *If any of the conditions isn't met, a regular move, or copy, whichever is defined, is called.*
@@ -40,8 +40,8 @@ struct A {
         // destructively assign content into 'a'
     }
     ~A () noexcept -> A {
-        // destructively (N)RVA construct new A
-        return A{ … };
+        // destructively (N)RVO construct new A
+        return A { ... };
     }
 };
 ```
@@ -56,9 +56,9 @@ Destructive assignment:
 ```cpp
 A a;
 A b;
-// …
+// ...
 b = std::move (a); // invokes a.~A(b);
-// …
+// ...
 // never use 'a' within this scope
 ```
 
@@ -66,9 +66,9 @@ Destructive initialization:
 
 ```cpp
 A a;
-// …
+// ...
 A b (std::move (a)); // the second destructor NRVO-constructs 'b'
-// …
+// ...
 // never use 'a' within this scope
 ```
 
@@ -81,6 +81,7 @@ Emphasis is on *minimalistic* here. This design certainly doesn't solve what eve
 
 ## Possible extensions
 * both destructors could be `= default`, akin to regular move, creating objects with life-times possibly shorter than their scope
-* `[[ attribute ]]` attribute for debug methods allowed to be called on destructively moved-from objects
+* some `[[ attribute ]]` for debug methods allowed to be called on destructively moved-from objects
 * in some situations, like RVO or NRVO exist now, it could be guaranteed that the destructive move, if defined, is called instead
-
+* passing the address (or a reference) of `a` (above) to a function cancels the eligibility for destructive move
+   * unless, perhaps, the compiler can proove the function doesn't store or forward it
