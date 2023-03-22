@@ -4,29 +4,31 @@
 # C++ Design Proposal: Destructive Move
 
 A destructive move is final move-from, that is allowed to leave the object in random invalid state.
-After destructive move-from, the object will (should) never be accessed again.
+After destructive move-from, the object's lifetime ended, and it will (should) never be accessed again.
 No (other) destructor is executed for it.
+
+There are many designs proposed or talked about for destructive move in C++, the following one is the least intrusive.
 
 ## Key assumptions
 
 * destructive move-from can happen to object during its lifetime only once
 * destructive move-from ends object's lifetime
-* touching the object after being destructively moved-from is an error
+* touching the object after being destructively moved-from would be an error
 
 ## What destructive move fits C++
 
 * simple and minimal initial design
-* only classes implementing the new mechanism, as it's a change in life-time, can be destructively moved-from
+* only classes implementing the new mechanism can be destructively moved-from (it changes object's lifetime)
 * transparently works throughout existing code-bases, containers and standard library, without need for changes
 
-## Proposed mechanism
+## The proposed mechanism
 
-Classes may define two new destructors, see Syntax below.
+Classes may define two new destructors, see [Syntax](#Syntax) below.
 
-For instances of those classes the compiler performs additional life-time analysis:
+For instances of such classes the compiler performs additional lifetime analysis:
 If it can **prove** the instance isn't touched after the last move-from (either implicit or `std::move`),
-it is allowed to (observably) replace that last move-from by the appropriate destructor,
-and end its lifetime there.
+it is allowed to **observably** replace that last move-from by the appropriate destructor,
+and end its lifetime there (early).
 
 *If any of the conditions isn't met, a regular move, or copy, whichever is defined, is called.*
 
