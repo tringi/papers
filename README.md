@@ -1,5 +1,13 @@
-*C++ and other*
-# Papers &amp; proposals
+# Windows OS improvement recipes
+
+* TODO: [DWM: ClearType on composited/translucent surfaces](win32-composited-cleartype.md)
+  *Defer text rendering to be done by DWM at composition time. DwmAddDeferredText (HWND, RECT, HFONT, ...);*
+
+* TODO: [Start Menu: Uninstall command for Win32](win32-uninstall-from-start.md)
+  *Introduce extended IShellLink2 to embed uninstaller path or uninstall registry key into .lnk file
+   so that Start Menu can directly run it, and bring consistency with Store/Moden apps*
+
+# C++ papers &amp; proposals
 
 * [C++ Destructive Move](cxx-destructive-move.md) - quick and dirty proposal draft
 
@@ -10,7 +18,11 @@
   };
   ```
 
-# Syntactic sugar ideas
+* TODO: [Fast x86-64 calling convention for C++](cxx-x64-v2-calling-convention.md)
+  *Fully utilize registers, pack smaller structures, spill larger structures.
+   Keep current ABI when interfacing the OS.* 
+
+# C++ Syntactic sugar ideas
 
 * **Argument dependent lookup for scoped enumerations**  
   *If an argument cannot be found, relevant enum scope is searched too, enabling one to write:*
