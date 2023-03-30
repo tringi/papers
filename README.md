@@ -48,8 +48,7 @@
   could appear, an immediate `return` can now appear too.*
   
   ```cpp
-  int fma (int a, int b, int c)
-      return a * b + c;
+  int fma (int a, int b, int c) return a * b + c;
   ```
   
 * `const` and `volatile` implies `auto`
