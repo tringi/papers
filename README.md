@@ -3,7 +3,7 @@
 * TODO: [DWM: ClearType on composited/translucent surfaces](win32-composited-cleartype.md)  
   *Defer text rendering to be done by DWM at composition time. DwmAddDeferredText (HWND, RECT, HFONT, ...);*
 
-* TODO: [Start Menu: Uninstall command for Win32](win32-uninstall-from-start.md)  
+* [Start Menu: Uninstall command for Win32](win32-uninstall-from-start.md) **Work In Progress**  
   *Introduce extended IShellLink2 to embed uninstaller path or uninstall registry key into .lnk file
    so that Start Menu can directly run it, and bring consistency with Store/Moden apps*
 
