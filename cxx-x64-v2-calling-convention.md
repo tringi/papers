@@ -46,28 +46,18 @@ But fresh new efficient ABI
 
 ## Proposed calling convention semantics
 
-### Non-skipping
+Non-skipping
+* Parameter registers are progressively allocated, not assigned per parameter index.
 
-Parameter registers are progressively allocated, not assigned per parameter index.
+Spilling
+* Structures passed as argument are spilled into registers
 
-### Spilling
-
-Structures passed as argument are spilled into registers
-
-### Packing
-
-All structures smaller or equal to a register size are passed in single register.
-This can be achieves by a single MOV instruction.
-
-Structures containing multiple float/double types are packed into XMM registers, if they fit.
-
-Potential issue: Loading 6B at the end of page, causing possible access violation fault. Restrict to power of 2?
-
-Potential issue: Security. Possible data leaking. Require extra masking?
-
-## Strict mode
-
-If the arguments don't fit the available registers, the function has no right to compile.
+Packing
+* All structures smaller or equal to a register size are passed in single register.  
+  This can be achieves by a single MOV instruction.
+* Structures containing multiple float/double types are packed into XMM registers, if they fit.
+* Potential issue: Loading 6B at the end of page, causing possible access violation fault. Restrict to power of 2?
+* Potential issue: Security. Possible data leaking. Require extra masking?
 
 ## Examples
 
@@ -96,16 +86,18 @@ struct Version {
 void CONVENTIONNAME function (int z, Data s, float f, Complex g, Version v);
 ```
 
-```
-z → rcx
-s.a → rdx
-s.b → xmm0
-s.pt → r8
-s.c → xmm1
-f → xmm2
-g → xmm3
-v → r9
-```
+Assignment
+
+Parameter | Register
+-|-
+z | rcx
+s.a | rdx
+s.b | xmm0
+s.pt | r8
+s.c | xmm1
+f | xmm2
+g | xmm3
+v | r9
 
 ## Name
 
@@ -113,4 +105,4 @@ TBD
 
 ## Possible extensions
 
-TBD
+??? If the arguments don't fit the available registers, the function has no right to compile.
