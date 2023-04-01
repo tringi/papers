@@ -1,6 +1,5 @@
 :arrow_backward: [Win32 Proposals and ideas](README.md)
 
-*Jan Ringoš*
 # Start Menu: Uninstall command for Win32 apps
 
 Currently Store/Modern/Metro/packaged apps can be immediately Uninstalled from Start Menu

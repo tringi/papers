@@ -1,6 +1,5 @@
 ﻿:arrow_backward: [C++ Proposals and ideas](README.md)
 
-*Jan Ringoš*
 # C++ Design Proposal: Destructive Move
 
 A destructive move is final move-from, that is allowed to leave the object in random invalid state.

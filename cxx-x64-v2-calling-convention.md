@@ -1,6 +1,5 @@
 ﻿:arrow_backward: [C++ Proposals and ideas](README.md)
 
-*Jan Ringoš*
 # C++ Implementation Proposal: x86-64 calling convention v2
 
 Spill everything, pack what you can, don't skip any registers, and be done with it.
