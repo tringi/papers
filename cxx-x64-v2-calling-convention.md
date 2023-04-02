@@ -15,9 +15,8 @@ That's not true.
 There are at least
 [System V AMD64](https://en.wikipedia.org/wiki/X86_calling_conventions?useskin=vector#x86-64_calling_conventions),
 [Microsoft's x64](https://learn.microsoft.com/en-us/cpp/build/x64-calling-convention?view=msvc-170),
-[__vectorcall](https://learn.microsoft.com/en-us/cpp/cpp/vectorcall?view=msvc-170) conventions.
-
-There is `[[trivial_abi]]`: https://quuxplusone.github.io/blog/2018/05/02/trivial-abi-101/
+[__vectorcall](https://learn.microsoft.com/en-us/cpp/cpp/vectorcall?view=msvc-170) conventions,
+and [[[trivial_abi]]](https://quuxplusone.github.io/blog/2018/05/02/trivial-abi-101/) exists.
 
 ### Additional
 
