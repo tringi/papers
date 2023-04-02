@@ -9,7 +9,7 @@ That would not be feasible in any realistic form
 (albeit AArch64 Windows does have [2 native ABIs](https://learn.microsoft.com/en-us/windows/arm/arm64ec)).
 
 This is a suggestion for ABI used within the process and accompanied DLLs.
-Just like C++ process on x86-64 is __cdecl, but is interfacing the OS via __stdcall.
+Just like C++ process on x86-32 is __cdecl, but is interfacing the OS via __stdcall.
 
 ## Rationale
 
