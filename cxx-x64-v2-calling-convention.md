@@ -8,7 +8,7 @@ This is obviously NOT a suggestion to change ABI for interfacing with the OS.
 That would not be feasible in any realistic form
 (albeit AArch64 Windows does have [2 native ABIs](https://learn.microsoft.com/en-us/windows/arm/arm64ec)).
 
-This is a suggestion for ABI used within the process and accompanied DLLs.
+This is a suggestion for ABI used within the process and accompanied DLLs.  
 Just like C++ process on x86-32 is __cdecl, but is interfacing the OS via __stdcall.
 
 ## Rationale
@@ -32,22 +32,23 @@ And then [[[trivial_abi]]](https://quuxplusone.github.io/blog/2018/05/02/trivial
 
 ## Current issues
 
-* TBD: optional, string_view, ...codebases still pass pointer and size
+* TBD: std::pair, std::optional, std::string_view, ...codebases still pass pointer and size
 
 ## Proposed calling convention semantics
 
 Non-skipping
-* Parameter registers are progressively allocated, not assigned per parameter index.
+* Parameter registers are progressively allocated, not assigned by argument index.
 
 Spilling
-* Structures passed as argument are spilled into registers
+* Structures passed as arguments are spilled into registers
 
 Packing
 * All structures smaller or equal to a register size are passed in single register.  
   This can be achieved by a single MOV instruction.
+  * Potential issues with structures of non-power of 2 size:
+    * Loading 6B at the end of page, causing possible access violation fault. Restrict to power of 2?
+    * Mov 6B to a register moves 8B. Insecure. Possible data leaking. Require extra masking?
 * Structures containing multiple float/double types are packed into XMM registers, if they fit.
-* Potential issue: Loading 6B at the end of page, causing possible access violation fault. Restrict to power of 2?
-* Potential issue: Mov 6B to register movs 8B. Insecure. Possible data leaking. Require extra masking?
 
 ## Examples
 
