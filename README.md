@@ -1,7 +1,8 @@
 # Windows OS improvement recipes
 
-* TODO: [DWM: ClearType on composited/translucent surfaces](win32-composited-cleartype.md)  
-  *Defer text rendering to be done by DWM at composition time. DwmAddDeferredText (HWND, RECT, HFONT, ...);*
+* [DWM: ClearType on composited/translucent surfaces](win32-composited-cleartype.md)  
+  *Defer text rendering to be done by DWM at composition time.  
+   DwmSetDeferredText (HWND, LONG_PTR, RECT, HFONT, ..., LPCWSTR text, int cch);*
 
 * [Start Menu: Uninstall command for Win32](win32-uninstall-from-start.md)  
   *Introduce extended IShellLink2 to embed uninstaller path or uninstall registry key into .lnk file
