@@ -101,5 +101,10 @@ v | r9
 ## Limitations
 
 * Working within current boundaries of Microsoft Visual C++ we need to fit within:
-   * RCX, RDX, R8, R9, R10, R11 are considered volatile (caller-saved)
+   * RCX, RDX, R8, R9, R10, R11, and XMM0 to XMM5 are considered volatile (caller-saved)
 * If the arguments don't fit the available registers, the calling convention reverts to the original one.
+
+## Return values
+
+* The exactly same mechanism is used to pack and spill return value into RAX, R10, R11, XMM4 and XMM5 registers.
+  * Microsoft's ABI considers those volatile on return
