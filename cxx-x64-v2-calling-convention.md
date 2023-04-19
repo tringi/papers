@@ -48,7 +48,11 @@ Packing
   * Potential issues with structures of non-power of 2 size:
     * Loading 6B at the end of page, causing possible access violation fault. Restrict to power of 2?
     * Mov 6B to a register moves 8B. Insecure. Possible data leaking. Require extra masking?
-* Structures containing multiple float/double types are packed into XMM registers, if they fit.
+* While 8B heterogeneous `struct { int i; float f; }` is passed in a single register,
+  larger ones are spilled per-element. Someone will eventually need to unpack those before use,
+  so why not do that at call site.
+* Structures containing multiple float/double types are packed into as many XMM registers as possible.
+  * YMM/ZMM?
 
 ## Examples
 
@@ -96,9 +100,6 @@ v | r9
 
 ## Limitations
 
-* working within current boundaries of Microsoft Visual C++ we need to fit within:
+* Working within current boundaries of Microsoft Visual C++ we need to fit within:
    * RCX, RDX, R8, R9, R10, R11 are considered volatile (caller-saved)
-
-## Possible extensions
-
-??? If the arguments don't fit the available registers, the function has no right to compile.
+* If the arguments don't fit the available registers, the calling convention reverts to the original one.
