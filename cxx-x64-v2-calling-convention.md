@@ -9,7 +9,8 @@ That would not be feasible in any realistic form
 (albeit AArch64 Windows does have [2 native ABIs](https://learn.microsoft.com/en-us/windows/arm/arm64ec)).
 
 This is a suggestion for ABI used within the process and accompanied DLLs.  
-Just like C++ process on x86-32 is __cdecl, but is interfacing the OS via __stdcall.
+Just like C++ process on x86-32 is [__cdecl](https://learn.microsoft.com/en-us/cpp/cpp/cdecl),
+but is interfacing the OS via [__stdcall](https://learn.microsoft.com/en-us/cpp/cpp/stdcall).
 
 ## Rationale
 
@@ -40,7 +41,7 @@ Non-skipping
 * Parameter registers are progressively allocated, not assigned by argument index.
 
 Spilling
-* Structures passed as arguments are spilled into registers
+* Structures, larger than a register, passed as arguments are spilled into registers
 
 Packing
 * All structures smaller or equal to a register size are passed in single register.  
