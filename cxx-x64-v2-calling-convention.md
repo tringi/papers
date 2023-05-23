@@ -14,10 +14,18 @@ but is interfacing the OS via [__stdcall](https://learn.microsoft.com/en-us/cpp/
 
 ## Rationale
 
-After a mess of myriad x86-32 calling conventions, 
-it is often presented as an important advantage and a definite fact,
-that there is only one single calling convention on *"X64"*.
-**It is not true.**
+Large production C++ codebases still resist modernization efforts,
+such as replacing pointer & size parameters with `std::span` or `std::string_view`,
+or nullable pointers with `std::optional`, for the reason that doing so is significant measurable pessimisation.
+
+The culprit is Windows' X64 calling convention, which mandates those utilities are passed via pointer,
+instead of spilled into registers.
+This introduces complex constructions at the call site and, primarily, unnecessary indirection inside the callee.
+
+### The simplicity argument
+
+After a mess of myriad x86-32 calling conventions, it is often presented as an important advantage and a fact,
+that there is only one single calling convention on *"X64"*. **That is not true.**
 
 There are at least
 [System V AMD64](https://en.wikipedia.org/wiki/X86_calling_conventions?useskin=vector#x86-64_calling_conventions),
@@ -25,15 +33,6 @@ There are at least
 and
 [__vectorcall](https://learn.microsoft.com/en-us/cpp/cpp/vectorcall?view=msvc-170) conventions.
 And then [[[trivial_abi]]](https://quuxplusone.github.io/blog/2018/05/02/trivial-abi-101/) exists on Clang.
-
-### Additional reading
-
-* Discusion on StackOverflow: [Why does Windows64 use a different calling convention from all other OSes on x86-64?](https://stackoverflow.com/questions/4429398/why-does-windows64-use-a-different-calling-convention-from-all-other-oses-on-x86)
-* [Calling convention reference on Agner.org](https://www.agner.org/optimize/calling_conventions.pdf)
-
-## Current issues
-
-* TBD: std::pair, std::optional, std::string_view, ...codebases still pass pointer and size
 
 ## Proposed calling convention semantics
 
@@ -109,3 +108,9 @@ v | r9
 
 * The exactly same mechanism is used to pack and spill return value into RAX, R10, R11, XMM4 and XMM5 registers.
   * Microsoft's ABI considers those volatile on return
+
+### Additional reading
+
+* Discusion on StackOverflow: [Why does Windows64 use a different calling convention from all other OSes on x86-64?](https://stackoverflow.com/questions/4429398/why-does-windows64-use-a-different-calling-convention-from-all-other-oses-on-x86)
+* [Calling convention reference on Agner.org](https://www.agner.org/optimize/calling_conventions.pdf)
+
