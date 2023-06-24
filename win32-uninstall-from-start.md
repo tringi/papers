@@ -41,6 +41,13 @@ ITaskbarList, ITaskbarList2, ITaskbarList3 and ITaskbarList4, not changing IShel
 The Start Menu, on selecting *Uninstall*, then retrieves this value (optionally loading it from Uninstall key),
 and starts the uninstaller directly, without opening Settings or Control Panel.
 
-Now, it is true that that would also require developers of the installer/uninstaller software to add a support in their code,
-a single line, but seeing how eagerly everyone still adds new Windows features, or at least those that make user's life easier,
-I'm sure most would do that immediately.
+## Caveat
+
+This should have been done a decade ago.
+
+It requires developers of the installer/uninstaller software to add support in their code.  
+A single line, but nonetheless it will take some time to adopt.
+
+Now, contrary to what Microsoft executives and tech journalists would love to believe, Win32 apps aren't going anywhere.
+Developers still add new Windows features into their decades old products. At least those that make user's life easier.
+That's why I conclude they will adopt this one.
