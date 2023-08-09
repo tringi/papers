@@ -16,7 +16,8 @@ but is interfacing the OS via [__stdcall](https://learn.microsoft.com/en-us/cpp/
 
 Large production C++ codebases still resist modernization efforts,
 such as replacing pointer & size parameters with `std::span` or `std::string_view`,
-or nullable pointers with `std::optional`, for the reason that doing so is significant measurable pessimisation.
+or nullable pointers with `std::optional` or `std::unique_ptr`,
+for the reason that doing so is significant measurable pessimisation.
 
 The culprit is Windows' X64 calling convention, which mandates those utilities are passed via pointer,
 instead of spilled into registers.
@@ -53,6 +54,11 @@ Packing
   so why not do that at call site.
 * Structures containing multiple float/double types are packed into as many XMM registers as possible.
   * YMM/ZMM?
+
+Lifetime
+* Function arguments' destructors are invoked by the callee.
+  * This allows for better elision and improves code size.
+  * Reference: [CppCon 2019: Chandler Carruth “There Are No Zero-cost Abstractions”](https://www.youtube.com/watch?v=rHIkrotSwcc)
 
 ## Examples
 
