@@ -21,7 +21,8 @@
 
 * [Fast x86-64 calling convention for C++](cxx-x64-v2-calling-convention.md) **Work In Progress**  
   *Fully utilize registers, pack smaller structures, spill larger structures.
-   Keep current ABI when interfacing the OS.* 
+   Keep current ABI when interfacing the OS.*  
+  Calling convention for modern era.
 
 # C++ Syntactic sugar ideas
 
