@@ -5,8 +5,8 @@
    DwmSetDeferredText (HWND, LONG_PTR, RECT, HFONT, ..., LPCWSTR text, int cch);*
 
 * [Win32 API: Support (w)string_view in place of LPCWSTR](win32-wstring_view_api.md)  
-  *Tagged pointer to `wstring_view` in place of LPCWSTR parameter,  
-   unwrapped internally directly into UNICODE_STRING that NT API consumes.*
+  *Tagged pointer to `wstring_view` in place of LPCWSTR parameter,
+   unwrapped internally directly into UNICODE_STRING that NT APIs consume.*
 
 * [Start Menu: Uninstall command for Win32](win32-uninstall-from-start.md)  
   *Introduce extended IShellLink2 to embed uninstaller path or uninstall registry key into .lnk file
