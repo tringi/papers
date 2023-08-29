@@ -4,6 +4,10 @@
   *Defer text rendering to be done by DWM at composition time.  
    DwmSetDeferredText (HWND, LONG_PTR, RECT, HFONT, ..., LPCWSTR text, int cch);*
 
+* [Win32 API: Support (w)string_view in place of LPCWSTR](win32-wstring_view_api.md)  
+  *Tagged pointer to `wstring_view` in place of LPCWSTR parameter,  
+   unwrapped internally directly into UNICODE_STRING that NT API consumes.*
+
 * [Start Menu: Uninstall command for Win32](win32-uninstall-from-start.md)  
   *Introduce extended IShellLink2 to embed uninstaller path or uninstall registry key into .lnk file
    so that Start Menu can directly run it, and bring consistency with Store/Moden apps*
