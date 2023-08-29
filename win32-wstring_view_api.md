@@ -2,7 +2,7 @@
 
 # Extend APIs that consume NUL-terminated strings to support (w)string_view
 
-*After native UTF-8 support finally added to Windows API a few years back,
+*After native UTF-8 support was finally added to Windows API a few years back,
 it's way overdue for it to be extended to support non-NUL-terminated strings.
 It's all converted to UNICODE_STRING inside anyway.*
 
@@ -18,9 +18,9 @@ forcing the user to allocate a NUL-terminated copy of the string.
 
 3. These API functions convert those parameters into
 [UNICODE_STRING](https://learn.microsoft.com/en-us/windows/win32/api/subauth/ns-subauth-unicode_string)s
-before passing it to appropiate NT API(s). UNICODE_STRING is a limited-size wstring_view.
+before passing it to appropiate NT API(s). UNICODE_STRING is a potentially-owning limited-size wstring_view.
 
-This is unnecessary complex and performance pesimisation, an effectively redundant allocation and data copying.
+This is unnecessary complex, performance pesimisation, and effectively redundant allocation and data copying.
 
 ## A solution
 
@@ -32,7 +32,7 @@ Propagate tagged pointer down to those routines, and unpack wstring_view directl
 
 ```cpp
 static inline LPCWSTR W64PassStringView (const std::wstring_view & s) {
-    return (LPCWSTR) (0x4000'0000'0000'0000uLL | ((DWORD_PTR) &s));
+    return (LPCWSTR) (0x4000000000000000uLL | ((DWORD_PTR) &s));
 }
 
 std::wstring_view s (...);
@@ -43,14 +43,15 @@ The extension of coversion routines is obvious:
 
 ```cpp
 VOID RtlInitUnicodeString (PUNICODE_STRING DestinationString, PCWSTR SourceString) {
-    if (0x4000'0000'0000'0000uLL & (DWORD_PTR) SourceString) {
+    if (0x4000000000000000uLL & (DWORD_PTR) SourceString) {
 
-        auto view = (ABI_WSTRING_VIEW_TYPE *) ((DWORD_PTR) SourceString & 0x00FF'FFFF'FFFF'FFFFuLL);
+        auto view = (ABI_WSTRING_VIEW_TYPE *) ((DWORD_PTR) SourceString & 0x00FFFFFFFFFFFFFFuLL);
+
+        /* TBD: check view->Length is in range */
 
         DestinationString->Buffer = view->Buffer;
-        DestinationString->Length = view->Length;
-        DestinationString->MaximumLength = view->Length;
-        
+        DestinationString->Length = 2 * view->Length;
+        DestinationString->MaximumLength = 2 * view->Length;
         }
     else {
         /* original code */
@@ -59,16 +60,18 @@ VOID RtlInitUnicodeString (PUNICODE_STRING DestinationString, PCWSTR SourceStrin
 
 ```
 
-**32-bit note:** Yes, I'm ignoring 32-bit code.
-There won't be new 32-bit Windows as Microsoft's people have
+### Notes
+
+* **32-bit** - Yes, I'm ignoring 32-bit code.
+There won't be any new 32-bit Windows as Microsoft's people have
 [openly acknowledged](https://twitter.com/JosephBialek/status/1581751766793981953)
 on social networks that 32-bit code is being removed from Windows kernel.
 
-**LA57 note:** Yes, on current era of x86-64 CPUs, it's possible to encode `Length` into upper 2 bytes of the pointer,
+**LA57** - Yes, on current era of x86-64 CPUs, it's possible to encode `USHORT Length` into upper 2 bytes of the pointer,
 and doing so skipping one indirection.
-As of 2023, new server CPUs featuring [5-level paging](https://en.wikipedia.org/wiki/Intel_5-level_paging) are expected
-to appear on the market, which will use 57-bit pointers, leaving only 7 bits (8 in user mode) for pointer tagging.
-
+But as of 2023, new server CPUs featuring [5-level paging](https://en.wikipedia.org/wiki/Intel_5-level_paging) are expected
+to appear on the market. Those support 57-bit pointers, leaving only 7 bits (8 in user mode) for pointer tagging.
+Which is clearly not enough.
 
 ## Alternative solutions
 
