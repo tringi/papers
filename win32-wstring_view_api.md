@@ -67,7 +67,7 @@ There won't be any new 32-bit Windows as Microsoft's people have
 [openly acknowledged](https://twitter.com/JosephBialek/status/1581751766793981953)
 on social networks that 32-bit code is being removed from Windows kernel.
 
-**LA57** - Yes, on current era of x86-64 CPUs, it's possible to encode `USHORT Length` into upper 2 bytes of the pointer,
+* **LA57** - Yes, on current era of x86-64 CPUs, it's possible to encode `USHORT Length` into upper 2 bytes of the pointer,
 and doing so skipping one indirection.
 But as of 2023, new server CPUs featuring [5-level paging](https://en.wikipedia.org/wiki/Intel_5-level_paging) are expected
 to appear on the market. Those support 57-bit pointers, leaving only 7 bits (8 in user mode) for pointer tagging.
