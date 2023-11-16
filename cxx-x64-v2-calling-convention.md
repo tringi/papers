@@ -60,6 +60,9 @@ Lifetime
   * This allows for better elision and improves code size.
   * Reference: [CppCon 2019: Chandler Carruth “There Are No Zero-cost Abstractions”](https://www.youtube.com/watch?v=rHIkrotSwcc)
 
+Various
+* Empty objects do not consume register nor stack slot, when passed by value.
+
 ## Examples
 
 ```cpp
