@@ -28,9 +28,28 @@
    Keep current ABI when interfacing the OS.*  
   Calling convention for modern era.
 
-# C++ Syntactic sugar ideas
+# C++ Syntactic sugar
+
+* **Function-return-statement (akin to function-try-block)**  
+  *In function definition, where function body would normally begin, or where `try` statement
+  could appear, an immediate `return` can now appear too.*
+  
+  ```cpp
+  int fma (int a, int b, int c)
+      return a * b + c;
+  ```
+  
+* `const` and `volatile` implies `auto`
+  
+  ```cpp
+  const a = 1; // same as: const auto a = 1;
+  volatile b = 2.0; // same as: volatile auto b = 2.0
+  ```
+
+# Superseded ideas
 
 * **Argument dependent lookup for scoped enumerations**  
+  Superseded by [Using-enum-declaration](https://en.cppreference.com/w/cpp/language/enum#Using-enum-declaration)  
   *If an argument cannot be found, relevant enum scope is searched too, enabling one to write:*
   
   ```cpp
@@ -47,19 +66,4 @@
   
   color green = blue; // color::blue
   function (green); // local variables still have priority
-  ```
-
-* **Function-return-statement (akin to function-try-block)**  
-  *In function definition, where function body would normally begin, or where `try` statement
-  could appear, an immediate `return` can now appear too.*
-  
-  ```cpp
-  int fma (int a, int b, int c) return a * b + c;
-  ```
-  
-* `const` and `volatile` implies `auto`
-  
-  ```cpp
-  const a = 1; // same as: const auto a = 1;
-  volatile b = 2.0; // same as: volatile auto b = 2.0
   ```
