@@ -83,4 +83,8 @@ Emphasis is on *minimalistic* here. This design certainly doesn't solve what eve
 * some `[[ attribute ]]` for debug methods allowed to be called on destructively moved-from objects
 * in some situations, like RVO or NRVO exist now, it could be guaranteed that the destructive move, if defined, is called instead
 * passing the address (or a reference) of `a` (above) to a function cancels the eligibility for destructive move
-   * unless, perhaps, the compiler can proove the function doesn't store or forward it
+   * unless, perhaps, the compiler can proove the function doesn't store or forward the pointer/reference
+
+## TODO:
+* inheritance
+* how members are destroyed, with/without destructive move defined
