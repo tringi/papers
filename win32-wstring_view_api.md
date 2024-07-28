@@ -31,12 +31,16 @@ or `RtlDosPathNameToNtPathName_U` that's used by file APIs, it makes sense to:
 Propagate tagged pointer down to those routines, and unpack wstring_view directly to UNICODE_STRING.
 
 ```cpp
-static inline LPCWSTR W64PassStringView (const std::wstring_view & s) {
+#ifdef _WIN64
+static inline LPCWSTR PassStringView (const std::wstring_view & s) {
     return (LPCWSTR) (0x4000000000000000uLL | ((DWORD_PTR) &s));
 }
+#else
+#define PassStringView(s) std::wstring((s)).c_str()
+#endif
 
 std::wstring_view s (...);
-CreateFile (W64PassStringView (s), ...);
+CreateFile (PassStringView (s), ...);
 ```
 
 The extension of coversion routines is obvious:
@@ -45,22 +49,26 @@ The extension of coversion routines is obvious:
 VOID RtlInitUnicodeString (PUNICODE_STRING DestinationString, PCWSTR SourceString) {
     if (0x4000000000000000uLL & (DWORD_PTR) SourceString) {
 
-        auto view = (ABI_WSTRING_VIEW_TYPE *) ((DWORD_PTR) SourceString & 0x00FFFFFFFFFFFFFFuLL);
+        auto view = (const std::wstring_view *) ((DWORD_PTR) SourceString & 0x00FFFFFFFFFFFFFFuLL);
 
         /* TBD: check view->Length is in range */
 
-        DestinationString->Buffer = view->Buffer;
-        DestinationString->Length = 2 * view->Length;
-        DestinationString->MaximumLength = 2 * view->Length;
+        DestinationString->Buffer = view->data ();
+        DestinationString->Length = sizeof (WCHAR) * view->size ();
+        DestinationString->MaximumLength = sizeof (WCHAR) * view->size ();
         }
     else {
         /* original code */
     }
 }
 
+NTSTATUS WINAPI RtlInitUnicodeStringEx (...); // extended in the same way
+
 ```
 
 ### Notes
+
+* This approach would cement layout and binary representation of `std::wstring_view` into both MSVC and Windows ABI.
 
 * **32-bit** - Yes, I'm ignoring 32-bit code.
 There won't be any new 32-bit Windows as Microsoft's people have
