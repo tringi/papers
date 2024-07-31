@@ -13,8 +13,8 @@
    so that Start Menu can directly run it, and bring consistency with Store/Moden apps*
 
 * `SetThreadExecutionState (..., ES_DISPLAY_REQUIRED)` should apply only to thread's
-  [Desktop](https://learn.microsoft.com/en-us/windows/win32/winstation/window-stations-and-desktops).
-  *This will prevent browser playing video on **locked** computer (e.g. user is listening to music)
+  [Desktop](https://learn.microsoft.com/en-us/windows/win32/winstation/window-stations-and-desktops).  
+  *This will prevent browser playing a video on a **locked** computer (e.g. user is listening to music)
    from keeping the screens on, when there's nothing of value being displayed.*
 
 # C++ papers &amp; proposals
