@@ -12,6 +12,23 @@
   *Introduce extended IShellLink2 to embed uninstaller path or uninstall registry key into .lnk file
    so that Start Menu can directly run it, and bring consistency with Store/Moden apps*
 
+* Add current thread's [NUMA node number](https://learn.microsoft.com/en-us/windows/win32/procthread/numa-support)
+  to [TEB](https://en.wikipedia.org/wiki/Win32_Thread_Information_Block) to improve performance of fast allocators
+  and caches.  
+  Updated on context switch.
+  It will reduce to a single `mov` the following routine, which contains extra syscall and an expensive loop inside
+  [GetNumaProcessorNodeEx](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-getnumaprocessornodeex):
+
+  ```cpp
+  USHORT GetCurrentProcessorNumaNode () {
+      USHORT numa;
+      PROCESSOR_NUMBER processor;
+      GetCurrentProcessorNumberEx (&processor);
+      GetNumaProcessorNodeEx (&processor, &numa);
+      return numa;
+  }
+  ```
+
 * `SetThreadExecutionState (..., ES_DISPLAY_REQUIRED)` should apply only to thread's
   [Desktop](https://learn.microsoft.com/en-us/windows/win32/winstation/window-stations-and-desktops).  
   *This will prevent browser playing a video on a **locked** computer (e.g. user is listening to music)
