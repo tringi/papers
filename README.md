@@ -17,6 +17,9 @@
   *This will prevent browser playing a video on a **locked** computer (e.g. user is listening to music)
    from keeping the screens on, when there's nothing of value being displayed.*
 
+* `DeleteMultipleFiles` API to request deletion of more than single file with one syscall
+  to improve deletion performance of large directories.
+
 # C++ papers &amp; proposals
 
 * [C++ Destructive Move](cxx-destructive-move.md) - quick and dirty proposal draft
