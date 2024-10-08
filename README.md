@@ -71,7 +71,7 @@
   volatile b = 2.0; // same as: volatile auto b = 2.0
   ```
 
-* **Named break/continue**
+* **Named break/continue**  
   *New control transfer statements are introduced, `break for;` and `break switch;` that can be used to
   transfer control out of nearest `for` or `switch` statements from within nested constructions.*
 
@@ -89,7 +89,7 @@
   }
   ```
 
-* **goto case/default**
+* **goto case/default**  
   *Within a `switch` statement, a `goto case X;` or `goto default;` can be used to transfer control to
   appropriate `case` or `default` label belonging to that switch.*
   
@@ -109,7 +109,8 @@
   }
   ```
   
-  **Undecided:** Should `goto case/default` to missing case be treated as error or evaluated?
+  **Undecided:** Should `goto case/default` to a missing case label be treated as error or evaluated?
+  If evaluated, should non-static data, e.g. `goto case a * 2 + 1;` be allowed?
 
 # Superseded ideas
 
