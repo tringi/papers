@@ -71,6 +71,46 @@
   volatile b = 2.0; // same as: volatile auto b = 2.0
   ```
 
+* **Named break/continue**
+  *New control transfer statements are introduced, `break for;` and `break switch;` that can be used to
+  transfer control out of nearest `for` or `switch` statements from within nested constructions.*
+
+  ```cpp
+  for (...) {
+      switch (...) {
+          case X:
+              break for;
+          case Y:
+              for (...) {
+                  if (...)
+                      break switch;
+              }
+      }
+  }
+  ```
+
+* **goto case/default**
+  *Within a `switch` statement, a `goto case X;` or `goto default;` can be used to transfer control to
+  appropriate `case` or `default` label belonging to that switch.*
+  
+  ```cpp
+  switch (x) {
+      case 0:
+          func0 ();
+          goto case 2;
+      case 1:
+          func1 ();
+          goto default;
+      case 2:
+          func2 ();
+          break;
+      default:
+          func_default ();
+  }
+  ```
+  
+  **Undecided:** Should `goto case/default` to missing case be treated as error or evaluated?
+
 # Superseded ideas
 
 * **Argument dependent lookup for scoped enumerations**  
