@@ -89,10 +89,7 @@ Which is clearly not enough.
 LPCWSTR WINAPI CreateFile3 (SIZE_T len, LPCWSTR ptr, ...);
 ```
 
-Obviously not feasible.
+Obviously not feasible,
+but I wrote sample implementation of a few functions in [/tringi/win32-wstring_view](/tringi/win32-wstring_view) repository.
 
 **Remark:** With CreateFile(2) additional approaches are actually possible, but we'll ignore tham, as they don't apply to other APIs.
-
-## TODO
-
-*
