@@ -112,7 +112,7 @@
   **Undecided:** Should `goto case/default` to a missing case label be treated as error or evaluated?
   If evaluated, should non-static data, e.g. `goto case a * 2 + 1;` be allowed?
 
-# Superseded ideas
+## Superseded ideas
 
 * **Argument dependent lookup for scoped enumerations**  
   Superseded by [Using-enum-declaration](https://en.cppreference.com/w/cpp/language/enum#Using-enum-declaration)  
@@ -133,3 +133,17 @@
   color green = blue; // color::blue
   function (green); // local variables still have priority
   ```
+
+# x86 ISA Extensions proposals
+
+* **LOCK BSFR** [BSF (Bit Scan Forward)](https://www.felixcloutier.com/x86/bsf) and Reset.  
+  The same operation as BSF with addition of clearing the found set bit.
+  Viola, lock-free bitmap allocator with a single instruction.
+  [BSR](https://www.felixcloutier.com/x86/bsr)R optional.  
+  It seems like a sensible addition to complete the [BTS](https://www.felixcloutier.com/x86/bts),
+  [BTR](https://www.felixcloutier.com/x86/btr), [BTC](https://www.felixcloutier.com/x86/btc) set.
+
+* **vpccintersectps rax, ymm0, ymm1**  
+  Would set RAX to distance (squared?) of envelopes of two circles. Each YMM register would contain X,Y,Z and Radius.
+  If RAX <= 0 then circles intersect, otherwise RAX is their distance (squared?).
+
