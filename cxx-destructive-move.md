@@ -2,8 +2,8 @@
 
 # C++ Design Proposal: Destructive Move
 
-A destructive move is final move-from, that is allowed to leave the object in random invalid state.
-After destructive move-from, the object's lifetime ended, and it will (should) never be accessed again.
+A destructive move is the final (within a scope, compiler-detected) move-from, which is allowed to leave the object in random invalid state.
+After destructive move-from, the object's lifetime ended, and it will never be accessed again.
 No (other) destructor is executed for it.
 
 There are many designs proposed or talked about for destructive move in C++, the following one is the least intrusive.
@@ -12,6 +12,7 @@ There are many designs proposed or talked about for destructive move in C++, the
 
 * destructive move-from can happen to object during its lifetime only once
 * destructive move-from ends object's lifetime
+* which move-from is final, and thus destructive, is detected by the compiler
 * touching the object after being destructively moved-from would be an error
 
 ## What destructive move fits C++
@@ -22,9 +23,10 @@ There are many designs proposed or talked about for destructive move in C++, the
 
 ## The proposed mechanism
 
-Classes may define two new destructors, see [Syntax](#Syntax) below.
+Classes may define two new destructors, see [Syntax](#Syntax) below.  
+We call them *"destructively-movable-from"*, *"partially"* if both destructors are not defined.
 
-For instances of such classes, the compiler performs additional lifetime analysis:
+For destructively-movable-from instances, the compiler performs additional static lifetime analysis:
 If it can **prove** the instance isn't touched after the last move-from (either implicit or `std::move`),
 it is allowed to **observably** replace that last move-from by the appropriate new destructor (see below),
 and end its lifetime there (early).
@@ -56,6 +58,8 @@ Destructive assignment:
 A a;
 A b;
 // ...
+b = std::move (a); // normal move-from assignment
+// ...
 b = std::move (a); // invokes a.~A(b);
 // ...
 // never use 'a' within this scope
@@ -66,7 +70,9 @@ Destructive initialization:
 ```cpp
 A a;
 // ...
-A b (std::move (a)); // the second destructor NRVO-constructs 'b'
+A b (std::move (a)); // normal move-from constructor
+// ...
+A c (std::move (a)); // the a's destructor (N)RVO-constructs 'c'
 // ...
 // never use 'a' within this scope
 ```
@@ -85,6 +91,8 @@ Emphasis is on *minimalistic* here. This design certainly doesn't solve what eve
 * passing the address (or a reference) of `a` (above) to a function cancels the eligibility for destructive move
    * unless, perhaps, the compiler can proove the function doesn't store or forward the pointer/reference
 
+## Remarks
+* The identical rules for inheritance apply as for regular move operations
+
 ## TODO:
-* inheritance
-* how members are destroyed, with/without destructive move defined
+* how are destructively-movable-from members destroyed? when parent class is or isn't destructively-movable-from?
