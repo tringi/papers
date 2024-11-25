@@ -64,7 +64,9 @@
       return a * b + c;
   ```
   
-* `const` and `volatile` implies `auto`
+* `const` and `volatile` implies `auto`  
+  *While it might appear ambiguous, as `a` and `b` can be existing types,
+  those being immediatelly followed by `=` disambiguates the parse.*
   
   ```cpp
   const a = 1; // same as: const auto a = 1;
