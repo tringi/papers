@@ -53,6 +53,20 @@
    Keep current ABI when interfacing the OS.*  
   Calling convention for modern era.
 
+* Fix regular comparison operators for intrinsic types of distinct signedness  
+  *...now that [chained comparisons are getting fixed](https://wg21.link/p3439).*
+
+  ```cpp
+  bool operator < (signed int a, unsigned int b) noexcept {
+      if (a < 0)
+          return true;
+      if (b > INT_MAX)
+          return true;
+  
+      return unsigned (a) < b;
+  }
+  ```
+
 # C++ Syntactic sugar
 
 * **Function-return-statement (akin to function-try-block)**  
