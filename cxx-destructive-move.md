@@ -55,26 +55,34 @@ Design considerations for the syntax above:
 Destructive assignment:
 
 ```cpp
-A a;
-A b;
-// ...
-b = std::move (a); // normal move-from assignment
-// ...
-b = std::move (a); // invokes a.~A(b);
-// ...
-// never use 'a' within this scope
+{
+    A a;
+    A b;
+    // ...
+    b = std::move (a); // normal move-from assignment
+    // ...
+    // 'a' is re-used here and below
+    // ...
+    b = std::move (a); // invokes a.~A(b);
+    // ...
+    // 'a' is never used within this scope
+}
 ```
 
 Destructive initialization:
 
 ```cpp
-A a;
-// ...
-A b (std::move (a)); // normal move-from constructor
-// ...
-A c (std::move (a)); // the a's destructor (N)RVO-constructs 'c'
-// ...
-// never use 'a' within this scope
+{
+    A a;
+    // ...
+    A b (std::move (a)); // normal move-from constructor
+    // ...
+    // 'a' is re-used here and below
+    // ...
+    A c (std::move (a)); // the a's destructor (N)RVO-constructs 'c'
+    // ...
+    // 'a' is never used within this scope
+}
 ```
 
 ## Rationale
@@ -90,6 +98,10 @@ Emphasis is on *minimalistic* here. This design certainly doesn't solve what eve
 * in some situations, like RVO or NRVO exist now, it could be guaranteed that the destructive move, if defined, is called instead
 * passing the address (or a reference) of `a` (above) to a function cancels the eligibility for destructive move
    * unless, perhaps, the compiler can proove the function doesn't store or forward the pointer/reference
+
+## FAQ:
+* **Rule of Seven?**
+* No. The behavior of the two new extra destructors is completely independent to regular copy and move.
 
 ## Remarks
 * The identical rules for inheritance apply as for regular move operations
