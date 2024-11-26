@@ -13,7 +13,6 @@ There are many designs proposed or talked about for destructive move in C++, the
 * destructive move-from can happen to object during its lifetime only once
 * destructive move-from ends object's lifetime
 * which move-from is final, and thus destructive, is detected by the compiler
-* touching the object after being destructively moved-from would be an error
 
 ## What destructive move fits C++
 
@@ -59,13 +58,13 @@ Destructive assignment:
     A a;
     A b;
     // ...
-    b = std::move (a); // normal move-from assignment
+    b = std::move (a); // normal move-from assignment, because...
     // ...
-    // 'a' is re-used here and below
+    somefunc (a); // ...'a' is re-used here and below
     // ...
-    b = std::move (a); // invokes a.~A(b);
+    b = std::move (a); // invokes a.~A(b); because...
     // ...
-    // 'a' is never used within this scope
+    // ...'a' is never used within this scope
 }
 ```
 
@@ -75,13 +74,13 @@ Destructive initialization:
 {
     A a;
     // ...
-    A b (std::move (a)); // normal move-from constructor
+    A b (std::move (a)); // normal move-from constructor, because...
     // ...
-    // 'a' is re-used here and below
+    somefunc (a); // ...'a' is re-used here and below
     // ...
-    A c (std::move (a)); // the a's destructor (N)RVO-constructs 'c'
+    A c (std::move (a)); // the a's destructor (N)RVO-constructs 'c', because...
     // ...
-    // 'a' is never used within this scope
+    // ...'a' is never used within this scope
 }
 ```
 
@@ -101,10 +100,18 @@ Emphasis is on *minimalistic* here. This design certainly doesn't solve what eve
 
 ## FAQ:
 * **Rule of Seven?**
-* No. The behavior of the two new extra destructors is completely independent to regular copy and move.
+* No. The behavior of the two new extra destructors is completely independent to regular move and copy. Adding them possibly changes lifetime of the class.
+
+* **What happens if I use the variable after it's destructively moved-from?**
+* It's impossible. The compiler trivially sees the last time it's touched within a scope, and will not call destructive move-from before that point.
+
+* **Does taking address of the variable change anything?**
+* Taking address, just like any operation on the variable, makes any preceeding `std::move` on that variable ineligible to move from it destructively.
+  Any subsequent move is still eligible to shorten it's lifetime.
 
 ## Remarks
 * The identical rules for inheritance apply as for regular move operations
 
 ## TODO:
 * how are destructively-movable-from members destroyed? when parent class is or isn't destructively-movable-from?
+* examples side by side
