@@ -88,23 +88,19 @@ Destructive initialization:
 
 Emphasis is on *minimalistic* here. This design certainly doesn't solve what everyone wants, it offers start of an incremental approach because:
 1. nothing larger is going to get through the process within our lifetimes,
-2. we're not getting anything like Rust, nor any magic bullet, in C++ (probably) ever,
+2. we're not getting anything like Rust, Circle, nor any magic bullet, in C++ (probably) ever,
 3. obviously everyone is attempting to solve way too much in a single go.
 
 ## Possible extensions
 * both destructors could be `= default`, akin to regular move, creating objects with life-times possibly shorter than their scope
 * some `[[ attribute ]]` for debug methods allowed to be called on destructively moved-from objects
-* in some situations, like RVO or NRVO exist now, it could be guaranteed that the destructive move, if defined, is called instead
-* passing the address (or a reference) of `a` (above) to a function cancels the eligibility for destructive move
-   * unless, perhaps, the compiler can proove the function doesn't store or forward the pointer/reference
+* in some situations, like RVO or NRVO now, it could be guaranteed that the destructive move, if defined, is called instead
 
 ## FAQ:
 * **Rule of Seven?**
 * No. The behavior of the two new extra destructors is completely independent to regular move and copy. Adding them possibly changes lifetime of the class.
-
 * **What happens if I use the variable after it's destructively moved-from?**
 * It's impossible. The compiler trivially sees the last time it's touched within a scope, and will not call destructive move-from before that point.
-
 * **Does taking address of the variable change anything?**
 * Taking address, just like any operation on the variable, makes any preceeding `std::move` on that variable ineligible to move from it destructively.
   Any subsequent move is still eligible to shorten it's lifetime.
@@ -115,3 +111,4 @@ Emphasis is on *minimalistic* here. This design certainly doesn't solve what eve
 ## TODO:
 * how are destructively-movable-from members destroyed? when parent class is or isn't destructively-movable-from?
 * examples side by side
+* implementing regular moves by terms of destrucive move
