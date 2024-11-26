@@ -64,7 +64,7 @@ Destructive assignment:
     // ...
     b = std::move (a); // invokes a.~A(b); because...
     // ...
-    // ...'a' is never used within this scope
+    // ...'a' is never used within this scope again
 }
 ```
 
@@ -74,13 +74,10 @@ Destructive initialization:
 {
     A a;
     // ...
-    A b (std::move (a)); // normal move-from constructor, because...
-    // ...
-    somefunc (a); // ...'a' is re-used here and below
-    // ...
+    A b (std::move (a)); // normal move-from constructor, because it's referenced below
     A c (std::move (a)); // the a's destructor (N)RVO-constructs 'c', because...
     // ...
-    // ...'a' is never used within this scope
+    // ...'a' is never used within this scope again
 }
 ```
 
@@ -91,11 +88,6 @@ Emphasis is on *minimalistic* here. This design certainly doesn't solve what eve
 2. we're not getting anything like Rust, Circle, nor any magic bullet, in C++ (probably) ever,
 3. obviously everyone is attempting to solve way too much in a single go.
 
-## Possible extensions
-* both destructors could be `= default`, akin to regular move, creating objects with life-times possibly shorter than their scope
-* some `[[ attribute ]]` for debug methods allowed to be called on destructively moved-from objects
-* in some situations, like RVO or NRVO now, it could be guaranteed that the destructive move, if defined, is called instead
-
 ## FAQ:
 * **Rule of Seven?**
 * No. The behavior of the two new extra destructors is completely independent to regular move and copy. Adding them possibly changes lifetime of the class.
@@ -105,10 +97,33 @@ Emphasis is on *minimalistic* here. This design certainly doesn't solve what eve
 * Taking address, just like any operation on the variable, makes any preceeding `std::move` on that variable ineligible to move from it destructively.
   Any subsequent move is still eligible to shorten it's lifetime.
 
+## Syntax: Forcefully invoking destructive move destructor
+This is probably antipattern, but as an example, let's implement regular move operations by terms of destructive move operators:
+
+```cpp
+struct A {
+    // ...see above
+
+    A & operator = (A && other) {
+        other.~A (*this); // destructively move 'other' into 'this'
+        new (&other) A;   // construct new 'other'
+        return *this;
+    }
+    A (A && other) : A (other.~A ()) { // destructively (for 'other') RVO-construct this A
+        new (&other) A;   // construct new 'other'
+    }
+}
+```
+
 ## Remarks
 * The identical rules for inheritance apply as for regular move operations
+
+## Possible extensions
+* both destructors could be `= default`, akin to regular move, creating objects with life-times possibly shorter than their scope
+* some `[[ attribute ]]` for debug methods allowed to be called on destructively moved-from objects
+* in some situations, like RVO or NRVO now, it could be guaranteed that the destructive move, if defined, is called instead
 
 ## TODO:
 * how are destructively-movable-from members destroyed? when parent class is or isn't destructively-movable-from?
 * examples side by side
-* implementing regular moves by terms of destrucive move
+
