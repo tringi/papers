@@ -8,6 +8,8 @@ No (other) destructor is executed for it.
 
 There are many designs proposed or talked about for destructive move in C++, the following one is the least intrusive.
 
+TL;DR: Use `std::move`s as normal, and compiler replaces the last one with destructive move, if one is defined.
+
 ## Key assumptions
 
 * destructive move-from can happen to object during its lifetime only once
