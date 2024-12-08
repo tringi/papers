@@ -8,7 +8,7 @@ No (other) destructor is executed for it.
 
 There are many designs proposed or talked about for destructive move in C++, the following one is the least intrusive.
 
-TL;DR: Use `std::move`s as normal, and compiler replaces the last one with destructive move, if one is defined.
+TL;DR: Use `std::move` as normal. The compiler replaces the last one with destructive move, if defined.
 
 ## Key assumptions
 
