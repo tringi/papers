@@ -91,14 +91,14 @@ Emphasis is on *minimalistic* here. This design certainly doesn't solve what eve
 3. obviously everyone is attempting to solve way too much in a single go.
 
 ## FAQ:
-* **Rule of Seven?**
-* No. The behavior of the two new extra destructors is completely independent to regular move and copy. Adding them possibly changes lifetime of the class.
+* **Rule of Seven?**  
+  No. The behavior of the two new extra destructors is completely independent to regular move and copy. Adding them possibly changes lifetime of the class.
 
-* **What happens if I use the variable after it's destructively moved-from?**
-* It's impossible. The compiler trivially sees the last time it's touched within a scope, and will not call destructive move-from before that point.
+* **What happens if I use the variable after it's destructively moved-from?**  
+  It's impossible. The compiler trivially sees the last time it's touched within a scope, and will not call destructive move-from before that point.
 
-* **Does taking address of the variable change anything?**
-* Taking address, just like any operation on the variable, makes any preceeding `std::move` on that variable ineligible to move from it destructively.
+* **Does taking address of the variable change anything?**  
+  Taking address, just like any operation on the variable, makes any preceeding `std::move` on that variable ineligible to move from it destructively.
   Any subsequent move is still eligible to shorten it's lifetime.
 
 ## Syntax: Forcefully invoking destructive move destructor
