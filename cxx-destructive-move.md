@@ -34,7 +34,10 @@ and end its lifetime there (early).
 
 *If any of the conditions isn't met, a regular move, or copy, whichever is defined, is called.*
 
+If (N)RVO cannot be applied on `return` statement, if the class is destructively-movable-from, it is destructively moved from.
+
 ## Syntax
+Destructively-movable-from class defines at least one of these destructors:
 
 ```cpp
 struct A {
@@ -53,7 +56,13 @@ Design considerations for the syntax above:
 * it's a destructive move, thus destructor
 * destructors don't return value now? so what? it's special :)
 
-Destructive assignment:
+<table>
+<tr>
+<th><p>Destructive assignment:</p></th>
+<th><p>Destructive initialization:</p></th>
+</tr>
+<tr>
+<td>
 
 ```cpp
 {
@@ -70,7 +79,8 @@ Destructive assignment:
 }
 ```
 
-Destructive initialization:
+</td>
+<td>
 
 ```cpp
 {
@@ -82,6 +92,10 @@ Destructive initialization:
     // ...'a' is never used within this scope again
 }
 ```
+
+</td>
+</tr>
+</table>
 
 ## Rationale
 
@@ -129,5 +143,5 @@ struct A {
 
 ## TODO:
 * how are destructively-movable-from members destroyed? when parent class is or isn't destructively-movable-from?
-* examples side by side
+* examples side by side: passing into functions, returning
 
