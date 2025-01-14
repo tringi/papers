@@ -67,7 +67,7 @@
   }
   ```
 
-* Fix `operator[]` by adding assignment-only version
+* Fix `operator[]` by adding assignment-only version  
   *priority in overload resolution for assignment when present*
 
   ```cpp
