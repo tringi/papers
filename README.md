@@ -67,6 +67,22 @@
   }
   ```
 
+* Fix `operator[]` by adding assignment-only version
+  *priority in overload resolution for assignment when present*
+
+  ```cpp
+  template <typename Key, typename Value>
+  struct Map {
+      Value && operator[] (Key && k, Value && v) {
+          return this->insert_or_assign (k, v).first->second;
+      }
+  };
+  
+  Map <int, float> m;
+  m[1] = 2.3f; // calls the operator[] above
+  float c = m[1]; // calls normal operator[], if any
+  ```
+
 # C++ Syntactic sugar
 
 * **Function-return-statement (akin to function-try-block)**  
