@@ -37,6 +37,15 @@
 * `DeleteMultipleFiles` API to request deletion of more than single file with one syscall
   to improve deletion performance of large directories.
 
+## Random fixes/additions that would be nice:
+
+* 10-bit support in GDI
+* Taskbar icon crispness was lost in Windows 10
+* Incorrect window menu item highlighted when there's no menubar
+* `CreateFiber (..., FIBER_FLAG_AVX_SWITCH)`
+* SetTimerEx (..., LPVOID context);
+* TlsAllocEx (lpCallback);
+
 # C++ papers &amp; proposals
 
 * [C++ Destructive Move](cxx-destructive-move.md) - quick and dirty proposal draft
