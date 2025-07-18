@@ -153,6 +153,15 @@
   **Undecided:** Should `goto case/default` to a missing case label be treated as error or evaluated?
   If evaluated, should non-static data, e.g. `goto case a * 2 + 1;` be allowed?
 
+* **Rotate operators**  
+  *All ISAs have ROTL and ROTR instructions, but emitting them requires calling instrinsics or relying on
+  compiler detecting and optimizing patterns. The idea is:*
+  
+  ```cpp
+  a <<> 3; // rotate left by 3 bits
+  b <>> 4; // rotate right by 4 bits
+  ```
+  
 ## Superseded ideas
 
 * **Argument dependent lookup for scoped enumerations**  
