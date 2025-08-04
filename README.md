@@ -165,7 +165,7 @@
 ## Superseded ideas
 
 * **Argument dependent lookup for scoped enumerations**  
-  Superseded by [Using-enum-declaration](https://en.cppreference.com/w/cpp/language/enum#Using-enum-declaration)  
+  Superseded by [Using-enum-declaration](https://en.cppreference.com/w/cpp/language/enum#using_enum_declaration)  
   *If an argument cannot be found, relevant enum scope is searched too, enabling one to write:*
   
   ```cpp
