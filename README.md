@@ -92,6 +92,62 @@
   float c = m[1]; // calls normal operator[], if any
   ```
 
+* Scope extension of ???  
+  *not sure how to call it*
+
+<table>
+<tr>
+<th><p>Usage:</p></th>
+<th><p>Rewritten as:</p></th>
+</tr>
+<tr>
+<td>
+
+```cpp
+template <typename T>
+std::string function (T p) {
+    auto r;
+    if constexpr (std::is_integral_v <T>) {
+        r = sub1 (p); // returns 'int'
+        r <<= 4;
+    } else {
+        auto x = sub3 ();
+        r = sub2 (p); // returns 'float'
+        r /= 100.0f + x;
+    }
+    r += 123;
+    return std::to_string (r);
+}
+```
+
+</td>
+<td>
+
+```cpp
+template <typename T>
+std::string function (T p) {
+    if constexpr (std::is_integral_v <T>) {
+        int r = sub1 (p);
+        r <<= 4;
+        r += 123;
+        return std::to_string (r);
+    } else {
+        auto x = sub3 ();
+        float r = sub2 (p);
+        r /= 100.0f * x;
+        // 'x' is destroyed here
+        r += 123;
+        return std::to_string (r);
+    }
+}
+```
+
+</td>
+</tr>
+</table>
+
+
+
 # C++ Syntactic sugar
 
 * **Function-return-statement (akin to function-try-block)**  
