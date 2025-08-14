@@ -31,10 +31,13 @@ The solution is to extend the LNK format of either:
   *The Start Menu can then combine it with the proper key, and find the `UninstallString` value by itself.*  
   *This approach would also allow the Start Menu to retrieve and display additional data set by the installer.*
 
-Then add IShellLink method to write it, e.g.: `SetUninstallKey (LPCTSTR)`.
+Then either:
 
-*This means idiomatically extend IShellLink to **IShellLink2** containing the new method, akin to existing
-ITaskbarList, ITaskbarList2, ITaskbarList3 and ITaskbarList4, not changing IShellLink itself, of course.*
+* use IShellLinkDataList to add another block containing this information,
+
+* or add IShellLink method to write it, e.g.: `SetUninstallKey (LPCTSTR)`.  
+  *This means idiomatically extend IShellLink to **IShellLink2** containing the new method, akin to existing
+  ITaskbarList, ITaskbarList2, ITaskbarList3 and ITaskbarList4, not changing IShellLink itself, of course.*
 
 ## Behavior
 

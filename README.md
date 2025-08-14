@@ -9,8 +9,8 @@
    unwrapped internally directly into UNICODE_STRING that NT APIs consume.*
 
 * [Start Menu: Uninstall command for Win32](win32-uninstall-from-start.md)  
-  *Introduce extended IShellLink2 to embed uninstaller path or uninstall registry key into .lnk file
-   so that Start Menu can directly run it, and bring consistency with Store/Moden apps*
+  *Introduce new IShellLinkDataList block or extended IShellLink2 to embed uninstaller path or uninstall registry
+   key into .lnk file so that Start Menu can directly run it, and bring consistency with Store/Moden apps*
 
 * Add current thread's [NUMA node number](https://learn.microsoft.com/en-us/windows/win32/procthread/numa-support)
   to [TEB](https://en.wikipedia.org/wiki/Win32_Thread_Information_Block) to improve performance of fast allocators
