@@ -206,8 +206,8 @@ std::string function (T p) {
   }
   ```
   
-  **Undecided:** Should `goto case/default` to a missing case label be treated as error or evaluated?
-  If evaluated, should non-static data, e.g. `goto case a * 2 + 1;` be allowed?
+  `goto case/default` to a missing case label is allowed and simply jumps past the `switch` statement.
+  Evaluation of `goto case a * 2 + 1;` should also be allowed.
 
 * **Rotate operators**  
   *All ISAs have ROTL and ROTR instructions, but emitting them requires calling instrinsics or relying on
