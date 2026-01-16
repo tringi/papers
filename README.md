@@ -68,7 +68,7 @@
   Calling convention for modern era.
 
 * Lambdas have access to static objects in their encompassing scope  
-  *because they are, well, global; in a way*
+  *Because they are, well, global.*
 
   ```cpp
   if (lParam) {
@@ -89,7 +89,7 @@
   ```
 
 * Fix `operator[]` by adding assignment-only version  
-  *priority in overload resolution for assignment when present*
+  *Has priority in overload resolution for assignment when present.*
 
   ```cpp
   template <typename Key, typename Value>
@@ -104,10 +104,10 @@
   float c = m[1]; // calls normal operator[], if any
   ```
 
-* Scope extension of ???  
-  *not sure how to call it*
+* Automatic type deduction in constexpr scope  
+  *Common code after the deduction is instantiated once for each distinct deduced type.*
 
-<table>
+  <table>
 <tr>
 <th><p>Usage:</p></th>
 <th><p>Rewritten as:</p></th>
