@@ -37,6 +37,11 @@
 * `DeleteMultipleFiles` API to request deletion of more than single file with one syscall
   to improve deletion performance of large directories.
 
+## The state of Windows
+
+* [The abysmal state of Taskbar icons of Windows 11](windows-state-of-icons.md)  
+  *Making all the wrong choices when rendering taskbar icons.*
+
 ## Random fixes/additions that would be nice:
 
 * 10-bit support in GDI
@@ -62,17 +67,24 @@
    Keep current ABI when interfacing the OS.*  
   Calling convention for modern era.
 
-* Fix regular comparison operators for intrinsic types of distinct signedness  
-  *...now that [chained comparisons are getting fixed](https://wg21.link/p3439).*
+* Lambdas have access to static objects in their encompassing scope  
+  *because they are, well, global; in a way*
 
   ```cpp
-  bool operator < (signed int a, unsigned int b) noexcept {
-      if (a < 0)
-          return true;
-      if (b > INT_MAX)
-          return true;
-  
-      return unsigned (a) < b;
+  if (lParam) {
+      static WPARAM wParam = 0;
+      static LRESULT result = 0;
+      
+      wParam = GetWParam (...);
+      
+      EnumThreadWindows (GetCurrentThreadId (),
+                         [] (HWND hWnd, LPARAM lParam) {
+                             
+                             // 'result' and 'wParam' is static, thus accessible!
+                             result = PostMessage (hWnd, m, wParam, lParam);
+                             
+                             return TRUE;
+                         }, lParam);
   }
   ```
 
@@ -146,7 +158,19 @@ std::string function (T p) {
 </tr>
 </table>
 
+* Fix regular comparison operators for intrinsic types of distinct signedness  
+  *...now that [chained comparisons are getting fixed](https://wg21.link/p3439).*
 
+  ```cpp
+  bool operator < (signed int a, unsigned int b) noexcept {
+      if (a < 0)
+          return true;
+      if (b > INT_MAX)
+          return true;
+  
+      return unsigned (a) < b;
+  }
+  ```
 
 # C++ Syntactic sugar
 
