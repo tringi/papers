@@ -107,7 +107,7 @@
 * Automatic type deduction in constexpr scope  
   *Common code after the deduction is instantiated once for each distinct deduced type.*
 
-  <table>
+<table>
 <tr>
 <th><p>Usage:</p></th>
 <th><p>Rewritten as:</p></th>
