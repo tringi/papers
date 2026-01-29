@@ -2,7 +2,7 @@
 
 # The abysmal state of Taskbar icons of Windows 11
 
-[Click here to skip to the actual issue](#The_Problem)
+[Click here to skip to the actual issue](#the-problem)
 
 ## Prologue
 
@@ -36,7 +36,7 @@ or being of [SM_CXICON](https://learn.microsoft.com/en-us/windows/win32/api/winu
 The size is (or rather used to be) customizable, and of course scales with DPI.  
 On 200% scaling it's 64×64 px.
 
-This icon used to represent minimized application.
+This icon used to represent running minimized application on the Desktop.
 
 <br clear="left">
 
@@ -44,16 +44,28 @@ This icon used to represent minimized application.
 
 <img align="left" src="windows-state-of-icons-small.png">
 
-With revamped GUI, windows can and should now specify also the (ICON_SMALL](https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-geticon) icon.
-The [UX Guide](https://learn.microsoft.com/en-us/windows/win32/uxguide/vis-icons) provides guidelines how one should look.
+With revamped GUI, applications now can (and should, and usually do)
+[specify](https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-wndclassexw) also
+the [ICON_SMALL](https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-geticon) icon.
+The [UX Guide](https://learn.microsoft.com/en-us/windows/win32/uxguide/vis-icons) provides guidelines on how one should look.
 
-A small icon should too provide a representation of the application, but simplified enough, so that is still clear and recognizable at only 16×16 pixels.
+This small icon too provides a representation of the application, but simplified enough,
+so that it's still clear and recognizable at only 16×16 pixels.
 
-
-
-...And for a time, it was good.
+As you can see in the picture, if the regular/large icon was simply scaled down (3rd column), it would be blurry, ugly and almost unrecognizable.
+But hand-crafted small icon (4th column) looks significantly better.
+Note that the scaledown still happens automatically if the application doesn't provide one.
 
 <br clear="left">
+
+So when Windows needed to display UI regarding applications, like Taskbar, Alt+Tab, Win+Tab or Task Manager, it had a choice.
+If the application recognition was crucial, like on Taskbar, it **asked it** for the large icon, and paint it large.
+If it was some kind of list, it would **ask it** for the small icon, and paint the small icon.
+It was (pixel-) perfect.
+
+And for a time, it was good.
+
+
 
 
 
