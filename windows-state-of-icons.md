@@ -29,11 +29,12 @@ On Windows, when an application creates a window, it specifies two icons for it.
 
 <img align="left" src="windows-state-of-icons-win3.png">
 
-First it was just one icon, of 32×32 px, which we now call a *large*
+First it was just one icon, of 32×32 px, which we now call a *"large"*
 or [ICON_BIG](https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-geticon)
 or being of [SM_CXICON](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getsystemmetrics) size.
 
-The size is (or rather used to be) customizable, and of course scales with DPI. On 200% scaling it's 64×64 px.
+The size is (or rather used to be) customizable, and of course scales with DPI.  
+On 200% scaling it's 64×64 px.
 
 This icon used to represent minimized application.
 
@@ -41,8 +42,18 @@ This icon used to represent minimized application.
 
 ### Windows 95/NT to 8.1
 
+<img align="left" src="windows-state-of-icons-small.png">
+
+With revamped GUI, windows can and should now specify also the (ICON_SMALL](https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-geticon) icon.
+The [UX Guide](https://learn.microsoft.com/en-us/windows/win32/uxguide/vis-icons) provides guidelines how one should look.
+
+A small icon should too provide a representation of the application, but simplified enough, so that is still clear and recognizable at only 16×16 pixels.
+
 
 
 ...And for a time, it was good.
+
+<br clear="left">
+
 
 
