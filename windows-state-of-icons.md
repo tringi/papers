@@ -62,9 +62,6 @@ If the application identity recognition was crucial, like on Taskbar, it **asked
 If it was for some kind of list, it would **ask it** for the small icon; and paint the small icon.
 This approach kept the whole GUI nice and crisp (pixel-perfect).
 
-<br clear="left">
-<br>
-
 And for a time, it was good.
 
 ## Windows 10
@@ -123,16 +120,27 @@ That's the answer.
 We just hope to see the change in the [Insider Program](https://www.microsoft.com/windowsinsider/) early enough to adapt our apps,
 before the build reaches maturity. And users.
 
-This breaks when the app is pinned though.
-
-TBD
-
 <br clear="left">
 <br>
 
+### This breaks when the app is pinned though
 
-## Testing tool
+Because the Taskbar internally uses [Shell Image Lists](https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shgetimagelist)
+for pinned icons, and these still respect ICON_BIG/SM_CXICON system metrics, it will
+[extract](https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-extracticonexw) 32×32 icon and again, poorly resize it to 24×24.
 
-For the remaining content to make more sense, 
+There is an API (TBD: Add link), through which the application can provide its own icon to be used for pinned button.
+So naturally one would try and provide icon of 24×24 pixels in size. This doesn't work.
+It's added to the aforementioned image list, thus first resized to 32×32, and then resized again to 24×24, which looks even worse.
+
+## The testing tool
+
+
+
+
+
+
+
+
 
 
