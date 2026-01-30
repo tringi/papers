@@ -84,6 +84,8 @@ See this comparison between Windows 8.1 and Windows 10, when the application pro
 
 <img src="img/windows-state-of-icons-win10.png">
 
+*(disregard the testing app, I'll get to it later)*
+
 Well, it's just a Technical Preview, I thought; they'll complete and polish it later.
 They will give us new API, perhaps [SM_CXTASKBARICON](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getsystemmetrics) metrics,
 or [ICON_TASKBAR](https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-geticon) query constant,
@@ -92,7 +94,9 @@ or a way to manifest the application, so that everything will work in some other
 
 It was late 2014 and I was so damn naive.
 
-But still, when the shiny brand new Feedback Hub was introduced along with TP3, I decided to file an issue about this. Just so they know.
+But still, when the shiny brand new
+[Feedback Hub](https://support.microsoft.com/en-us/windows/send-feedback-to-microsoft-with-the-feedback-hub-app-f59187f8-8739-22d6-ba93-f66612949332)
+was introduced along with TP3, I decided to file an issue about this. Just so they know.
 
 Yeah.
 
@@ -104,9 +108,20 @@ My Feedback Hub issue has long since been deleted, and the Feedback Hub as a who
 Today, if an application wishes to have nice and crisp icon on the Taskbar, it checks Windows version
 (after navigating through the [compatibility lies](https://learn.microsoft.com/en-us/windows/win32/sysinfo/targeting-your-application-at-windows-8-1)),
 and uses 24×24 (scaled by DPI) when on Windows 10 or later.
-Yes, what happens if Microsoft changes it again, is a very valid question. Ugly icons will happen. Again. That's the answer.
+This is exactly what my [example testing app](https://github.com/tringi/win32-dpi) in the screenshot on the left does.
+
+So what happens if Microsoft changes it again?
+
+That's a very valid question.
+
+Ugly icons will happen.
+
+Again.
+
+That's the answer.
+
 We just hope to see the change in the [Insider Program](https://www.microsoft.com/windowsinsider/) early enough to adapt our apps,
-before the build reaches maturity ...and users.
+before the build reaches maturity. And users.
 
 This breaks when the app is pinned though.
 
