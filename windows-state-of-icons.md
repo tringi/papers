@@ -94,10 +94,11 @@ It was late 2014 and I was so damn naive.
 But still, when the shiny brand new
 [Feedback Hub](https://support.microsoft.com/en-us/windows/send-feedback-to-microsoft-with-the-feedback-hub-app-f59187f8-8739-22d6-ba93-f66612949332)
 was introduced along with TP3, I decided to file an issue about this. Just so they know.
+I also listed several possible easy solutions, even though I felt weird. Who was I to advise Microsoft programmers?
 
 Yeah.
 
-No API surface was ever provided AT ALL to the developers. And still wasn't **to this very day.**  
+No API surface was ever provided AT ALL. And still isn't **to this very day.**  
 My Feedback Hub issue has long since been deleted, and the Feedback Hub as a whole was purged several times since.
 
 <img align="left" src="img/windows-state-of-icons-win10fixed.png">
@@ -131,11 +132,22 @@ for pinned icons, and these still respect ICON_BIG/SM_CXICON system metrics, it 
 
 <img align="right" src="img/windows-state-of-icons-win10pinned.png">
 
-There is an API (TBD: Add link), through which the application can provide its own icon to be used for pinned button.
-So naturally one would try and provide icon of 24×24 pixels in size. This doesn't work.
-It's added to the aforementioned image list, thus first resized to 32×32, and then resized again to 24×24, which looks even worse.
+Pinned application icon then looks again like the red-outlined one in the Windows 8.1 and 10 comparison above.
+
+There is an API (TBD: Add link) though, through which the application can provide its own icon to be used for pinned button.
+So naturally one would try and provide an icon of 24×24 pixels in size. This too doesn't work.
+Such icon is added to the aforementioned image list, thus first resized to 32×32, and then resized again to 24×24, which looks even worse.
 
 ## The testing tool
+
+Before we continue, let me introduce the ["Win32 DPI-aware window example"](https://github.com/tringi/win32-dpi) (open source) testing tool,
+that you see in the screenshots.
+Its primary function is to act as a starting point for programmers who wish their apps to properly support high DPI displays on full range of old and new Windows.
+
+<img align="right" src="img/windows-state-of-icons-app.png">
+
+Here we use it, because it contains a special hand-crafted icon to show which resolution was actually loaded,
+and pixelated border to clearly reveal if any unwanted resizing is happening.
 
 
 
