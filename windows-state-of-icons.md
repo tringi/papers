@@ -159,37 +159,61 @@ And then programmers at Microsoft rewrote Taskbar for Windows 11 and things got 
 
 *(intentionally running on build 22000 to demonstrate the age of the issue)*
 
-In the screenshot above I started two identical copies of the testing tool, but one got incorrect icon.
+<img align="right" src="img/windows-state-of-icons-win11list.png">
+
+In the screenshot above I started two identical copies of the testing tool, but **one got incorrect icon.**
 Both instances are telling the OS to use the proper 24×24 px icon, so why is that? 
 
 **The first one has shortcut in Start Menu!**
 
-In that case, the new Taskbar completely ignores the window icon, and uses the icon specified in the shortcut. 
+And that makes the Taskbar to completely ignore the application-supplied window icon.
+The Taskbar uses only the icon specified in the shortcut; and in incorrect size.
 
-<img align="right" src="img/windows-state-of-icons-win11list.png">
+The frustrating part here is, that this is actually a smart approach.
 
-The frustrating part here is, that this is actually the right approach.
-
-Through the shortcut file (.lnk) the Taskbar can reach the EXE file itself.
+Taskbar can reach the EXE file itself through the shortcut file (.lnk).
 It could easily extract the icon of **the proper** size, whether applications do our trick above (detecting Windows 10) or not.
 But, for some reason, it doesn't.
-One could argue that the reason is underlying use of the Shell Image List that I mentioned above, but that's probably not it.
+One could argue that the reason is underlying use of the Shell Image List that I mentioned above,
+but that's probably not it, since the Taskbar was rewritten from scratch.
 
-Start Menu does the same, and extracts a nice crisp proper 24×24 px icon.
-
+And Start Menu does the same, yet extracts a nice crisp proper 24×24 px icon.  
 See the screenshot on the right:
 
-<br clear="left">
+<br clear="right">
 
 ## Windows 11 26H1
 
+It gets even worse:
 
+<img src="img/windows-state-of-icons-win11small.png">
 
+The upcoming version of Windows 11 introduces *"smaller taskbar buttons"*. Mind you, just buttons, not smaller Taskbar, like many users wanted.
+And of course, it doesn't render small icons properly either. But now it fails in the opposite manner.
 
-## Feedback Hub report:
+As you can see in the right screenshot above, when small buttons are set, a window of the application with shortcut uses correct 16×16 icon,
+but the window without one uses the large (32×32 or 24×24, whichever the application provided) icon, just ugly resized to 16×16.
+Again, despite there being simple direct API for the Taskbar to obtain this small icon, it doesn't use it.
 
-[Here](https://aka.ms/AAxichs)
+At least when pinned, both render correctly.
 
+## The solution
 
+A rant would be a waste of time if it didn't provide a solution, so here's mine.
+Despite it being obvious, let me spell out the proper algorithm.
 
+For regular-sized Taskbar:
 
+* If the window provides 24×24 icon, use that.
+* If the window provides 32×32 icon, use the new approach: If it has a Start Menu shortcut, load 24×24 version of the icon set in that shortcut.
+* Only then, if neither applies, use window's large icon and resize it down.
+* Create distinct 24×24 image list for large pinned icons.
+
+For small Taskbar:
+
+* If the application doesn't have Start Menu shortcut, use small window icon, not the large one, duh.
+
+## Feedback Hub report
+
+Before I analyzed this issue deeper, I created [this issue](https://aka.ms/AAxichs) on Feedback Hub.
+If you believe this should be fixed, please click the link and give it an upvote.
