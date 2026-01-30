@@ -129,6 +129,8 @@ Because the Taskbar internally uses [Shell Image Lists](https://learn.microsoft.
 for pinned icons, and these still respect ICON_BIG/SM_CXICON system metrics, it will
 [extract](https://learn.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-extracticonexw) 32×32 icon and again, poorly resize it to 24×24.
 
+<img align="right" src="img/windows-state-of-icons-win10pinned.png">
+
 There is an API (TBD: Add link), through which the application can provide its own icon to be used for pinned button.
 So naturally one would try and provide icon of 24×24 pixels in size. This doesn't work.
 It's added to the aforementioned image list, thus first resized to 32×32, and then resized again to 24×24, which looks even worse.
