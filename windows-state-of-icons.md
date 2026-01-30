@@ -40,7 +40,7 @@ This icon used to represent running minimized application on the Desktop.
 
 <br clear="left">
 
-### Windows 95/NT to 8.1
+### Windows 95/NT4 to 8.1
 
 <img align="left" src="img/windows-state-of-icons-small.png">
 
@@ -57,19 +57,65 @@ As you can see in the picture, if the regular/large icon was simply scaled down 
 But hand-crafted small icon (4th column) looks significantly better.
 Note that the scaledown still happens automatically if the application doesn't provide one.
 
+So when Windows needed to display UI regarding applications, like Taskbar, Alt+Tab, Win+Tab or Task Manager, it had a choice:
+If the application identity recognition was crucial, like on Taskbar, it **asked it** for the large icon; and painted it large.
+If it was for some kind of list, it would **ask it** for the small icon; and paint the small icon.
+This approach kept the whole GUI nice and crisp (pixel-perfect).
+
 <br clear="left">
 <br>
-
-So when Windows needed to display UI regarding applications, like Taskbar, Alt+Tab, Win+Tab or Task Manager, it had a choice:
-If the application identity recognition was crucial, like on Taskbar, it **asked it** for the large icon, and paint it large.
-If it was some kind of list, it would **ask it** for the small icon, and paint the small icon.
-It was (pixel-) perfect.
 
 And for a time, it was good.
 
 ## Windows 10
 
+The first crack in this beautiful and consistent state of affairs appears with Windows 10 Technical Preview.
+For some reason it was decided that Taskbar icons were too big, and that they should be 24×24 px of size instead.
+So a half way between small and large.
+
+Mind you, these were not the first 24×24 px icons. Start Menu used this size since Windows 95.
+But Start Menu didn't have to ask running application for such icon.
+It would simply follow the .lnk shortcut to the .exe, and extract it itself. Or the closest one and scaled it.
+
+What does the new Windows 10 Taskbar do?
+
+It just gets the large icon, as per usual, and resizes it to 24×24. Poorly.
+
+Well, it's just a Technical Preview, I thought back, they'll complete and polish it later.
+They will give us new API, perhaps [SM_CXTASKBARICON](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getsystemmetrics) metrics,
+or [ICON_TASKBAR](https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-geticon) query constant,
+or [WNDCLASSEX2](https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-wndclassexw) with new `hTaskbarIcon` member,
+or a way to manifest the application, so that everything will work in some other way.
+
+It was late 2014 and I was so damn naive.
+But when the shiny brand new Feedback Hub was introduced along with TP3, I decided to file an issue about this.
+
+Yeah.
+
+No API surface was ever provided AT ALL to the developers. And still wasn't **to this very day.**  
+My Feedback Hub issue has long since been deleted, and the Feedback Hub as a whole was purged several times since.
+
+<img align="left" src="img/windows-state-of-icons-win10.mkv">
+
+Today, if an application wishes to have nice and crisp icon on the Taskbar, it checks Windows version
+(after navigating through the [compatibility lies](https://learn.microsoft.com/en-us/windows/win32/sysinfo/targeting-your-application-at-windows-8-1)),
+and uses 24×24 (scaled by DPI) when on Windows 10 or later.
+Yes, what happens if Microsoft changes it again, is a very valid question. Ugly icons will happen. Again. That's the answer.
+We just hope to see the change in the [Insider Program](https://www.microsoft.com/windowsinsider/) early enough to adapt our apps,
+before the build reaches maturity ...and users.
+
+This breaks when the app is pinned though:
+
+<img align="left" src="img/windows-state-of-icons-win10pinned.mkv">
+
+TBD
+
+<br clear="left">
+<br>
 
 
+## Testing tool
+
+For the remaining content to make more sense, 
 
 
