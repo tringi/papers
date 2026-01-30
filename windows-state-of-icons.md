@@ -157,6 +157,38 @@ And then programmers at Microsoft rewrote Taskbar for Windows 11 and things got 
 
 <img src="img/windows-state-of-icons-win11.png">
 
+*(intentionally running on build 22000 to demonstrate the age of the issue)*
+
+In the screenshot above I started two identical copies of the testing tool, but one got incorrect icon.
+Both instances are telling the OS to use the proper 24×24 px icon, so why is that? 
+
+**The first one has shortcut in Start Menu!**
+
+In that case, the new Taskbar completely ignores the window icon, and uses the icon specified in the shortcut. 
+
+<img align="right" src="img/windows-state-of-icons-win11list.png">
+
+The frustrating part here is, that this is actually the right approach.
+
+Through the shortcut file (.lnk) the Taskbar can reach the EXE file itself.
+It could easily extract the icon of **the proper** size, whether applications do our trick above (detecting Windows 10) or not.
+But, for some reason, it doesn't.
+One could argue that the reason is underlying use of the Shell Image List that I mentioned above, but that's probably not it.
+
+Start Menu does the same, and extracts a nice crisp proper 24×24 px icon.
+
+See the screenshot on the right:
+
+<br clear="left">
+
+## Windows 11 26H1
+
+
+
+
+## Feedback Hub report:
+
+[Here](https://aka.ms/AAxichs)
 
 
 
