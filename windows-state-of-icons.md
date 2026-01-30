@@ -79,23 +79,27 @@ It would simply follow the .lnk shortcut to the .exe, and extract it itself. Or 
 
 What does the new Windows 10 Taskbar do?
 
-It just gets the large icon, as per usual, and resizes it to 24×24. Poorly.
+It just gets the large icon, as per usual, and resizes it to 24×24. Poorly.  
+See this comparison between Windows 8.1 and Windows 10, when the application provides 32×32 icon, as it's supposed to:
 
-Well, it's just a Technical Preview, I thought back, they'll complete and polish it later.
+<img src="img/windows-state-of-icons-win10.png">
+
+Well, it's just a Technical Preview, I thought; they'll complete and polish it later.
 They will give us new API, perhaps [SM_CXTASKBARICON](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getsystemmetrics) metrics,
 or [ICON_TASKBAR](https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-geticon) query constant,
 or [WNDCLASSEX2](https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-wndclassexw) with new `hTaskbarIcon` member,
 or a way to manifest the application, so that everything will work in some other way.
 
 It was late 2014 and I was so damn naive.
-But when the shiny brand new Feedback Hub was introduced along with TP3, I decided to file an issue about this.
+
+But still, when the shiny brand new Feedback Hub was introduced along with TP3, I decided to file an issue about this. Just so they know.
 
 Yeah.
 
 No API surface was ever provided AT ALL to the developers. And still wasn't **to this very day.**  
 My Feedback Hub issue has long since been deleted, and the Feedback Hub as a whole was purged several times since.
 
-<video align="left" src="img/windows-state-of-icons-win10.mp4"></video>
+<img align="left" src="img/windows-state-of-icons-win10fixed.png">
 
 Today, if an application wishes to have nice and crisp icon on the Taskbar, it checks Windows version
 (after navigating through the [compatibility lies](https://learn.microsoft.com/en-us/windows/win32/sysinfo/targeting-your-application-at-windows-8-1)),
@@ -104,9 +108,7 @@ Yes, what happens if Microsoft changes it again, is a very valid question. Ugly 
 We just hope to see the change in the [Insider Program](https://www.microsoft.com/windowsinsider/) early enough to adapt our apps,
 before the build reaches maturity ...and users.
 
-This breaks when the app is pinned though:
-
-<video align="left" src="img/windows-state-of-icons-win10pinned.mp4"></video>
+This breaks when the app is pinned though.
 
 TBD
 
