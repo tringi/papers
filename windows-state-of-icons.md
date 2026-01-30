@@ -2,7 +2,7 @@
 
 # The abysmal state of Taskbar icons of Windows 11
 
-[Click here to skip to the actual issue](#the-problem)
+[Click here to skip to the actual issue](#windows-11)
 
 ## Prologue
 
@@ -140,19 +140,22 @@ Such icon is added to the aforementioned image list, thus first resized to 32×3
 
 ## The testing tool
 
+<img align="right" src="img/windows-state-of-icons-app.png">
+
 Before we continue, let me introduce the ["Win32 DPI-aware window example"](https://github.com/tringi/win32-dpi) (open source) testing tool,
 that you see in the screenshots.
 Its primary function is to act as a starting point for programmers who wish their apps to properly support high DPI displays on full range of old and new Windows.
 
-<img align="right" src="img/windows-state-of-icons-app.png">
-
 Here we use it, because it contains a special hand-crafted icon to show which resolution was actually loaded,
-and pixelated border to clearly reveal if any unwanted resizing is happening.
+with pixelated black and white borders to clearly reveal if any unwanted resizing is happening.
 
+Using this icon we can see, from a glance, where Windows is using wrong icon, and which one it is.
 
+## Windows 11
 
+And then programmers at Microsoft rewrote Taskbar for Windows 11 and things got worse:
 
-
+<img src="img/windows-state-of-icons-win11.png">
 
 
 
