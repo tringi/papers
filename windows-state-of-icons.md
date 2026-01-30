@@ -95,7 +95,7 @@ Yeah.
 No API surface was ever provided AT ALL to the developers. And still wasn't **to this very day.**  
 My Feedback Hub issue has long since been deleted, and the Feedback Hub as a whole was purged several times since.
 
-<img align="left" src="img/windows-state-of-icons-win10.mkv">
+<video align="left" src="img/windows-state-of-icons-win10.mp4"></video>
 
 Today, if an application wishes to have nice and crisp icon on the Taskbar, it checks Windows version
 (after navigating through the [compatibility lies](https://learn.microsoft.com/en-us/windows/win32/sysinfo/targeting-your-application-at-windows-8-1)),
@@ -106,7 +106,7 @@ before the build reaches maturity ...and users.
 
 This breaks when the app is pinned though:
 
-<img align="left" src="img/windows-state-of-icons-win10pinned.mkv">
+<video align="left" src="img/windows-state-of-icons-win10pinned.mp4"></video>
 
 TBD
 
