@@ -42,6 +42,10 @@
 * [The abysmal state of Taskbar icons of Windows 11](windows-state-of-icons.md)  
   *Making all the wrong choices when rendering taskbar icons.*
 
+* ClearType subpixel antialiasing disappearing all over the OS
+  *The reason being it leaves artifacts on composited surfaces.
+  Fix suggested [here]([DWM: ClearType on composited/translucent surfaces](win32-composited-cleartype.md)).*
+
 ## Random fixes/additions that would be nice:
 
 * 10-bit support in GDI
