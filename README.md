@@ -146,10 +146,11 @@ std::string function (T p) {
         r += 123;
         return std::to_string (r);
     } else {
-        auto x = sub3 ();
         float r = sub2 (p);
-        r /= 100.0f * x;
-        // 'x' is destroyed here
+        {
+            auto x = sub3 ();
+            r /= 100.0f * x;
+        }
         r += 123;
         return std::to_string (r);
     }
