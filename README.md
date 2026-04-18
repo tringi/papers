@@ -29,11 +29,6 @@
   }
   ```
 
-* `SetThreadExecutionState (..., ES_DISPLAY_REQUIRED)` should apply only to thread's
-  [Desktop](https://learn.microsoft.com/en-us/windows/win32/winstation/window-stations-and-desktops).  
-  *This will prevent browser playing a video on a **locked** computer (e.g. user is listening to music)
-   from keeping the screens on, when there's nothing of value being displayed.*
-
 * `DeleteMultipleFiles` API to request deletion of more than single file with one syscall
   to improve deletion performance of large directories.
 
