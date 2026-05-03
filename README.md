@@ -16,8 +16,9 @@
   to [TEB](https://en.wikipedia.org/wiki/Win32_Thread_Information_Block) to improve performance of fast allocators
   and caches.  
   Updated on context switch.
-  It will reduce to a single `mov` the following routine, which contains extra syscall and an expensive loop inside
-  [GetNumaProcessorNodeEx](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-getnumaprocessornodeex):
+  It will reduce the following routine, which contains syscalls and an expensive loop inside
+  [GetNumaProcessorNodeEx](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-getnumaprocessornodeex)
+  to a single `mov`:
 
   ```cpp
   USHORT GetCurrentProcessorNumaNode () {
@@ -157,7 +158,7 @@ std::string function (T p) {
 </table>
 
 * Fix regular comparison operators for intrinsic types of distinct signedness  
-  *...now that [chained comparisons are getting fixed](https://wg21.link/p3439).*
+  *...now that [chained comparisons are maybe getting fixed](https://wg21.link/p3439).*
 
   ```cpp
   bool operator < (signed int a, unsigned int b) noexcept {
@@ -169,6 +170,8 @@ std::string function (T p) {
       return unsigned (a) < b;
   }
   ```
+  The generated code, see https://godbolt.org/z/jz1nTY7WE isn't that bad, 5 extra instructions top, branchless,
+  in many cases just sign-extensions.
 
 # C++ Syntactic sugar
 
