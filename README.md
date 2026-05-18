@@ -65,27 +65,6 @@
    Keep current ABI when interfacing the OS.*  
   Calling convention for modern era.
 
-* Lambdas have access to static objects in their encompassing scope  
-  *Because they are, well, global.*
-
-  ```cpp
-  if (lParam) {
-      static WPARAM wParam = 0;
-      static LRESULT result = 0;
-      
-      wParam = GetWParam (...);
-      
-      EnumThreadWindows (GetCurrentThreadId (),
-                         [] (HWND hWnd, LPARAM lParam) {
-                             
-                             // 'result' and 'wParam' is static, thus accessible!
-                             result = PostMessage (hWnd, m, wParam, lParam);
-                             
-                             return TRUE;
-                         }, lParam);
-  }
-  ```
-
 * Fix `operator[]` by adding assignment-only version  
   *Has priority in overload resolution for assignment when present.*
 
@@ -170,7 +149,7 @@ std::string function (T p) {
       return unsigned (a) < b;
   }
   ```
-  The generated code, see https://godbolt.org/z/jz1nTY7WE isn't that bad, 5 extra instructions top, branchless,
+  The generated code, see https://godbolt.org/z/jz1nTY7WE, isn't that bad. 5 extra instructions top, branchless,
   in many cases just sign-extensions.
 
 # C++ Syntactic sugar
